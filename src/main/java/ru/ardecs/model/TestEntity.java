@@ -3,7 +3,7 @@ package ru.ardecs.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
- * @author <a href="mailto:silminskih@wiley.com">Sergey Ilminskih</a>
+ * @author <a href="mailto:sergey.ilminskih@ardecs.com">Sergey Ilminskih</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TestEntity {
