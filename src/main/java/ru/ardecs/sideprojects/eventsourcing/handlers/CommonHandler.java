@@ -1,4 +1,4 @@
-package ru.ardecs.handlers;
+package ru.ardecs.sideprojects.eventsourcing.handlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.tuple.MutablePair;

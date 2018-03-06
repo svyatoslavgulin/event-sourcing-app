@@ -1,15 +1,30 @@
-package ru.ardecs.model;
+package ru.ardecs.sideprojects.eventsourcing.model;
 
-import ru.ardecs.utils.EventType;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author <a href="mailto:sergey.ilminskih@ardecs.com">Sergey Ilminskih</a>
  */
+@Document(collection = "event")
 public class Event {
 
+    @Id
+    private String id;
+    @Indexed
     private EventType type;
+    @Indexed
     private String name;
     private String payload;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

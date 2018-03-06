@@ -1,4 +1,4 @@
-package ru.ardecs.controller;
+package ru.ardecs.sideprojects.eventsourcing.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,8 +1,8 @@
-package ru.ardecs.service;
+package ru.ardecs.sideprojects.eventsourcing.service;
 
 import org.springframework.stereotype.Component;
-import ru.ardecs.model.Event;
-import ru.ardecs.utils.EventType;
+import ru.ardecs.sideprojects.eventsourcing.model.Event;
+import ru.ardecs.sideprojects.eventsourcing.model.EventType;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;

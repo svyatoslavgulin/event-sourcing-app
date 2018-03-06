@@ -1,4 +1,4 @@
-package ru.ardecs.model;
+package ru.ardecs.sideprojects.eventsourcing.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
