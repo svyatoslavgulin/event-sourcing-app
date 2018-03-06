@@ -13,9 +13,12 @@ public class Event {
     @Id
     private String id;
     @Indexed
+    private String objectId;
+    @Indexed
     private EventType type;
     @Indexed
     private String name;
+
     private String payload;
 
     public String getId() {
@@ -24,6 +27,14 @@ public class Event {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 
     public String getName() {
