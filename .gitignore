@@ -3,3 +3,4 @@
 build/
 out/
 *.iml
+/front-end/nbproject/private/
