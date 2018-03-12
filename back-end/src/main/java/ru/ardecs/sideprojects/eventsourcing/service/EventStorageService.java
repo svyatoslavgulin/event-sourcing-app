@@ -15,4 +15,5 @@ public class EventStorageService {
     public boolean isChanged(String objectId, String objectClass, String fieldName, String fieldValue) {
         return true;
     }
+    //TODO: add method which will say that entity is deleted or not.
 }

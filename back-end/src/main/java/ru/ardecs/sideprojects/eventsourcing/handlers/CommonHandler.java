@@ -42,7 +42,6 @@ public class CommonHandler<T> {
     public <T> T create(T entity, Class<? extends T> clazz, String id) throws JsonProcessingException {
 
         LOG.info("Start process creating of " + clazz.getSimpleName());
-        //TODO: this method which will say that entity is exist or not.
 
         if (Objects.isNull(entity)) {
             LOG.info(clazz.getSimpleName() + " is empty.");
