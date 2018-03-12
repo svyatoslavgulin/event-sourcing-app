@@ -1,5 +1,8 @@
 package ru.ardecs.sideprojects.eventsourcing.model;
 
+import java.util.Date;
+import java.util.Map;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,7 +22,9 @@ public class Event {
     @Indexed
     private String name;
 
-    private String payload;
+    private Date createdDate;
+
+    private Map<String, String> payload;
 
     public String getId() {
         return id;
@@ -46,7 +51,6 @@ public class Event {
     }
 
     public EventType getType() {
-
         return type;
     }
 
@@ -54,11 +58,19 @@ public class Event {
         this.type = type;
     }
 
-    public String getPayload() {
+    public Map<String, String> getPayload() {
         return payload;
     }
 
-    public void setPayload(String payload) {
+    public void setPayload(Map<String, String> payload) {
         this.payload = payload;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }

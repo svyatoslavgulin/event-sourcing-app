@@ -17,6 +17,7 @@ import ru.ardecs.sideprojects.eventsourcing.service.EventStorageService;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -97,7 +98,8 @@ public class CommonHandler<T> {
             event.setType(eventType);
             event.setName(clazz.getSimpleName());
             event.setObjectId(id);
-            event.setPayload(mapper.writeValueAsString(map));
+            event.setPayload(map);
+            event.setCreatedDate(new Date());
 
             eventRepository.save(event);
         }
