@@ -6,6 +6,7 @@ import ru.ardecs.sideprojects.eventsourcing.model.EventType;
 import ru.ardecs.sideprojects.eventsourcing.model.TestEntity;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
@@ -36,7 +37,9 @@ public class TemporaryStoreService {
     public TestEntity getEntityById(String id) {
         return store.stream()
                 .filter(entity -> entity.getId().equalsIgnoreCase(id))
-                .findFirst().orElseGet(null);
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse(null);
     }
 
     public List<TestEntity> getEntitys() {

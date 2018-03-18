@@ -1,5 +1,6 @@
 package ru.ardecs.sideprojects.eventsourcing.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.mongodb.MongoClient;
@@ -29,8 +30,13 @@ public class EventStorageService {
      * @param fieldValue  new value of the fieldName
      * @return is field value was changed
      */
-    public boolean isChanged(String objectId, String objectClass, String fieldName, String fieldValue) {
+    public boolean isChanged(String objectId, String objectClass, String fieldName, String fieldValue, Date create) throws IllegalArgumentException {
         Event lastEventWithChangedField = getLastEventWithUpdatedField(objectId, objectClass, fieldName);
+
+        if(lastEventWithChangedField != null && create.before(lastEventWithChangedField.getCreatedDate())){
+            throw new IllegalArgumentException(fieldName + " has been updated " + lastEventWithChangedField.getCreatedDate()
+                    + " when this update " + create);
+        }
 
         if (lastEventWithChangedField == null) {
             return false;
@@ -61,5 +67,16 @@ public class EventStorageService {
         query.addCriteria(Criteria.where("name").is(objectClass));
 
         return mongoOps.count(query, Event.class) > 0;
+    }
+
+    public boolean isUnique(String objectClass, String objectId, String fieldName){
+        MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new MongoClient(), databaseName));
+
+        Query query = Query.query(Criteria.where("objectId").is(objectId));
+        query.addCriteria(Criteria.where("name").is(objectClass));
+
+        List<Event> events = mongoOps.find(query, Event.class);
+
+        return events == null || events.isEmpty();
     }
 }

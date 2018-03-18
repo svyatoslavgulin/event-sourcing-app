@@ -10,6 +10,7 @@ import ru.ardecs.sideprojects.eventsourcing.model.EventType;
 import ru.ardecs.sideprojects.eventsourcing.model.TestEntity;
 import ru.ardecs.sideprojects.eventsourcing.service.TemporaryStoreService;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -25,8 +26,6 @@ public class SampleController {
     private CommonHandler<TestEntity> commonHandler;
     @Autowired
     private TemporaryStoreService storeService;
-
-    private AtomicInteger counter = new AtomicInteger(4);
 
     @GetMapping("/")
     public String version() {
@@ -47,20 +46,18 @@ public class SampleController {
 
     @PostMapping("/heroes")
     @CrossOrigin(origins = "http://localhost:4200")
-    public TestEntity save(@RequestBody TestEntity body) throws JsonProcessingException {
-        String id = String.valueOf(counter.incrementAndGet());
-        body.setId(id);
-        TestEntity entity = commonHandler.create(body, TestEntity.class, id);
+    public TestEntity save(@RequestBody TestEntity body) throws JsonProcessingException, InvocationTargetException, IllegalAccessException {
+        TestEntity entity = commonHandler.create(body, TestEntity.class);
         storeService.save(entity);
         return entity;
     }
 
     @PutMapping("/heroes")
     @CrossOrigin(origins = "http://localhost:4200")
-    public TestEntity updateHeroes(@RequestBody TestEntity body) throws JsonProcessingException {
+    public TestEntity updateHeroes(@RequestBody TestEntity body) throws JsonProcessingException, InvocationTargetException, IllegalAccessException {
         LOG.info("Body id: " + body.getId());
         LOG.info("Body name: " + body.getName());
-        TestEntity entity = commonHandler.update(body, TestEntity.class, body.getId());
+        TestEntity entity = commonHandler.update(body, TestEntity.class);
         return storeService.update(entity);
     }
 
