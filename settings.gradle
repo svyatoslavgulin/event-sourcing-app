@@ -1,2 +1,5 @@
+include 'front-end'
+include 'back-end'
+
 rootProject.name = 'event-sourcing-app'
 
