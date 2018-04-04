@@ -8,15 +8,15 @@ import java.util.Date;
  * @author <a href="mailto:sergey.ilminskih@ardecs.com">Sergey Ilminskih</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TestEntity {
+public class HeroEntity {
     private String id;
     private String name;
     private Date createdDate;
 
-    public TestEntity() {
+    public HeroEntity() {
     }
 
-    public TestEntity(String id, String name) {
+    public HeroEntity(String id, String name) {
         this.id = id;
         this.name = name;
         this.createdDate = new Date();

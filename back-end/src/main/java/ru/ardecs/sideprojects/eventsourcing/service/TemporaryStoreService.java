@@ -1,9 +1,7 @@
 package ru.ardecs.sideprojects.eventsourcing.service;
 
 import org.springframework.stereotype.Component;
-import ru.ardecs.sideprojects.eventsourcing.model.Event;
-import ru.ardecs.sideprojects.eventsourcing.model.EventType;
-import ru.ardecs.sideprojects.eventsourcing.model.TestEntity;
+import ru.ardecs.sideprojects.eventsourcing.model.HeroEntity;
 
 import java.util.List;
 import java.util.Objects;
@@ -16,25 +14,25 @@ import java.util.stream.Collectors;
 @Component
 public class TemporaryStoreService {
 
-    private final ConcurrentLinkedQueue<TestEntity> store = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<HeroEntity> store = new ConcurrentLinkedQueue<>();
 
     public TemporaryStoreService() {
-        store.add(new TestEntity("1", "Sergey"));
-        store.add(new TestEntity("2", "Slava"));
-        store.add(new TestEntity("3", "Super Men"));
+        store.add(new HeroEntity("1", "Sergey"));
+        store.add(new HeroEntity("2", "Slava"));
+        store.add(new HeroEntity("3", "Super Men"));
     }
 
-    public void save(TestEntity entity) {
+    public void save(HeroEntity entity) {
         store.add(entity);
     }
 
-    public TestEntity getEntity(String name) {
+    public HeroEntity getEntity(String name) {
         return store.stream()
                 .filter(entity -> entity.getName().equalsIgnoreCase(name))
                 .findFirst().orElseGet(null);
     }
 
-    public TestEntity getEntityById(String id) {
+    public HeroEntity getEntityById(String id) {
         return store.stream()
                 .filter(entity -> entity.getId().equalsIgnoreCase(id))
                 .filter(Objects::nonNull)
@@ -42,19 +40,19 @@ public class TemporaryStoreService {
                 .orElse(null);
     }
 
-    public List<TestEntity> getEntitys() {
+    public List<HeroEntity> getEntitys() {
         return store.stream()
                 .collect(Collectors.toList());
     }
 
-    public TestEntity update(TestEntity entity) {
-        TestEntity testEntity = store.stream()
+    public HeroEntity update(HeroEntity entity) {
+        HeroEntity heroEntity = store.stream()
                 .filter(e -> e.getId().equalsIgnoreCase(entity.getId()))
                 .findFirst().get();
 
-        testEntity.setName(entity.getName());
+        heroEntity.setName(entity.getName());
 
-        return testEntity;
+        return heroEntity;
     }
 
     public void delete(String id) {
