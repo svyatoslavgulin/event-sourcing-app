@@ -12,14 +12,20 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
-    compile("org.springframework.boot:spring-boot-starter-web:1.5.10.RELEASE")
-    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    compile 'org.springframework.boot:spring-boot-starter-data-mongodb:2.0.0.RELEASE'
 
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.4'
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
 
+    compile("org.springframework.boot:spring-boot-starter-parent:2.0.0.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb:2.0.0.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter:2.0.0.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-test:2.0.0.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-web:2.0.0.RELEASE")
+
+    compile("org.springframework.kafka:spring-kafka:2.1.4.RELEASE")
+    compile("org.springframework.kafka:spring-kafka-test:2.1.4.RELEASE")
+    compile("org.springframework:spring-jdbc:3.1.1.RELEASE")
 }
 
 buildscript {
@@ -27,6 +33,6 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE")
     }
 }
