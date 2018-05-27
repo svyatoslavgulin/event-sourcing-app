@@ -4,3 +4,6 @@ build/
 out/
 *.iml
 /front-end/nbproject/private/
+kafka-integration/target/
+sh.exe.stackdump
+gradle/
