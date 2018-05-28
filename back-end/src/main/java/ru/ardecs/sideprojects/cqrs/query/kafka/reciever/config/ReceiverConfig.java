@@ -1,4 +1,4 @@
-package ru.ardecs.sideprojects.cqrs.query.kafka.reciever;
+package ru.ardecs.sideprojects.cqrs.query.kafka.reciever.config;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
