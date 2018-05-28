@@ -1,5 +1,6 @@
 include 'front-end'
 include 'back-end'
+include 'back-end-cqrs'
 
 rootProject.name = 'event-sourcing-app'
 
