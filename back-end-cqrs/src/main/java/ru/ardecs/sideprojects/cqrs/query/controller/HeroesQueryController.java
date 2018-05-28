@@ -39,7 +39,7 @@ public class HeroesQueryController {
 
     @GetMapping("/heroes/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public HeroEntity getHeroes(@PathVariable String id) {
+    public HeroEntity getHero(@PathVariable String id) {
         return storeService.getEntityById(id);
     }
 }
