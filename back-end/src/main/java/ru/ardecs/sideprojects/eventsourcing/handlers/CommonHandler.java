@@ -54,16 +54,20 @@ public class CommonHandler<T> {
             throw new IllegalArgumentException("Field " + getNameIdField(entity) + " of " + clazz.getSimpleName() + " must be unique");
         };
 
-        Map<String, String> map = Stream.of(entity.getClass().getDeclaredFields())
-                .map(field -> retrieveNameAndValueField(field, entity))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toMap(pair -> pair.getKey(), pair -> pair.getValue()));
+        Map<String, String> map = getPropertiesMap(entity);
 
         setUpdateDateToEntity(entity);
 
         saveEvent(clazz, id, EventType.CREATE, map);
 
         return entity;
+    }
+
+    public <T> Map<String, String> getPropertiesMap(T entity) {
+        return Stream.of(entity.getClass().getDeclaredFields())
+                    .map(field -> retrieveNameAndValueField(field, entity))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toMap(pair -> pair.getKey(), pair -> pair.getValue()));
     }
 
     private <T> String generationIdAndGetNameFieldEntity(T entity, String id) throws InvocationTargetException, IllegalAccessException {

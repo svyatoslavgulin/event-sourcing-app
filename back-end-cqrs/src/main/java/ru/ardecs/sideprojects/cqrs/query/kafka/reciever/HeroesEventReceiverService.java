@@ -15,16 +15,14 @@ import ru.ardecs.sideprojects.cqrs.query.kafka.reciever.handlers.DeleteHeroEvent
 import ru.ardecs.sideprojects.cqrs.query.kafka.reciever.handlers.UpdateHeroEventHandler;
 import ru.ardecs.sideprojects.eventsourcing.model.Event;
 
-
 @Service
 public class HeroesEventReceiverService {
-
     private static final Logger LOG = LoggerFactory.getLogger(HeroesEventReceiverService.class);
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private final CreateHeroEventHandler createHeroEventHandler;
     private final DeleteHeroEventHandler deleteHeroEventHandler;
     private final UpdateHeroEventHandler updateHeroEventHandler;
-    private ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     public HeroesEventReceiverService(CreateHeroEventHandler createHeroEventHandler,
@@ -41,7 +39,7 @@ public class HeroesEventReceiverService {
         LOG.info("received message='{}'", message);
 
         try {
-            Event event = mapper.readValue(message, Event.class);
+            Event event = MAPPER.readValue(message, Event.class);
             switch (event.getType()) {
                 case CREATE:
                     createHeroEventHandler.apply(event);

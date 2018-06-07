@@ -1,16 +1,15 @@
 package ru.ardecs.sideprojects.cqrs.query.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.ardecs.sideprojects.cqrs.query.storage.model.HeroQueryEntity;
+import ru.ardecs.sideprojects.cqrs.query.storage.repository.HeroQueryRepository;
 
-import ru.ardecs.sideprojects.cqrs.query.storage.HeroesStorageService;
-import ru.ardecs.sideprojects.eventsourcing.model.HeroEntity;
+import java.util.Optional;
 
 
 /**
@@ -19,11 +18,11 @@ import ru.ardecs.sideprojects.eventsourcing.model.HeroEntity;
 @RestController
 @RequestMapping(value = "/cqrs")
 public class HeroesQueryController {
-    private final HeroesStorageService storeService;
+    private final HeroQueryRepository heroQueryRepository;
 
     @Autowired
-    public HeroesQueryController(HeroesStorageService storeService) {
-        this.storeService = storeService;
+    public HeroesQueryController(HeroQueryRepository heroQueryRepository) {
+        this.heroQueryRepository = heroQueryRepository;
     }
 
     @GetMapping("/")
@@ -33,13 +32,13 @@ public class HeroesQueryController {
 
     @GetMapping("/heroes")
     @CrossOrigin(origins = "http://localhost:4200")
-    public List<HeroEntity> getHeroes() {
-        return storeService.getEntities();
+    public Iterable<HeroQueryEntity> getHeroes() {
+        return heroQueryRepository.findAll();
     }
 
     @GetMapping("/heroes/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public HeroEntity getHero(@PathVariable String id) {
-        return storeService.getEntityById(id);
+    public Optional<HeroQueryEntity> getHero(@PathVariable String id) {
+        return heroQueryRepository.findById(id);
     }
 }

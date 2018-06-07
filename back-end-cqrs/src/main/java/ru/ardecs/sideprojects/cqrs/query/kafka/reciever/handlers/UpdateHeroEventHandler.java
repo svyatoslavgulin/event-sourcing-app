@@ -1,27 +1,37 @@
 package ru.ardecs.sideprojects.cqrs.query.kafka.reciever.handlers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ru.ardecs.sideprojects.cqrs.query.storage.HeroesStorageService;
+import ru.ardecs.sideprojects.cqrs.query.storage.model.HeroQueryEntity;
+import ru.ardecs.sideprojects.cqrs.query.storage.repository.HeroQueryRepository;
 import ru.ardecs.sideprojects.eventsourcing.model.Event;
 import ru.ardecs.sideprojects.eventsourcing.model.HeroEntity;
+
+import java.util.Optional;
 
 @Component
 public class UpdateHeroEventHandler implements EventHandler<HeroEntity> {
     private static final Logger LOG = LoggerFactory.getLogger(UpdateHeroEventHandler.class);
-    private final HeroesStorageService heroesStorageService;
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private final HeroQueryRepository repository;
 
     @Autowired
-    public UpdateHeroEventHandler(HeroesStorageService heroesStorageService) {
-        this.heroesStorageService = heroesStorageService;
+    public UpdateHeroEventHandler(HeroQueryRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public void apply(Event event) {
         LOG.debug("Handle update hero event...");
-        // TODO: update data in the storage
+        Optional<HeroQueryEntity> heroQueryEntity = repository.findById(event.getObjectId());
+        heroQueryEntity.ifPresent(e -> {
+            e.setName(event.getPayload().get("name"));
+            // TODO: тут могут быть ошибки сохранения (нарушение констрейнтов)
+            repository.save(e);
+        });
     }
 }
