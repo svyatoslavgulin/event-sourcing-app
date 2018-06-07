@@ -6,15 +6,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ru.ardecs.sideprojects.cqrs.commands.kafka.sender.model.Event;
 import ru.ardecs.sideprojects.cqrs.query.storage.model.HeroQueryEntity;
 import ru.ardecs.sideprojects.cqrs.query.storage.repository.HeroQueryRepository;
-import ru.ardecs.sideprojects.eventsourcing.model.Event;
-import ru.ardecs.sideprojects.eventsourcing.model.HeroEntity;
 
 import java.util.Optional;
 
 @Component
-public class UpdateHeroEventHandler implements EventHandler<HeroEntity> {
+public class UpdateHeroEventHandler implements EventHandler<HeroQueryEntity> {
     private static final Logger LOG = LoggerFactory.getLogger(UpdateHeroEventHandler.class);
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private final HeroQueryRepository repository;

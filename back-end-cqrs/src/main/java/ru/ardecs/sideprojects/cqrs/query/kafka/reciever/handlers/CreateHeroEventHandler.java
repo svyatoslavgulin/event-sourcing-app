@@ -5,13 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ru.ardecs.sideprojects.cqrs.commands.kafka.sender.model.Event;
 import ru.ardecs.sideprojects.cqrs.query.storage.model.HeroQueryEntity;
 import ru.ardecs.sideprojects.cqrs.query.storage.repository.HeroQueryRepository;
-import ru.ardecs.sideprojects.eventsourcing.model.Event;
-import ru.ardecs.sideprojects.eventsourcing.model.HeroEntity;
 
 @Component
-public class CreateHeroEventHandler implements EventHandler<HeroEntity> {
+public class CreateHeroEventHandler implements EventHandler<HeroQueryEntity> {
     private static final Logger LOG = LoggerFactory.getLogger(CreateHeroEventHandler.class);
     private final HeroQueryRepository repository;
 

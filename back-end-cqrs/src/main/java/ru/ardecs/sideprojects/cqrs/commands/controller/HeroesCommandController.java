@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ru.ardecs.sideprojects.cqrs.commands.controller.model.HeroCommandEntity;
 import ru.ardecs.sideprojects.cqrs.commands.kafka.sender.HeroesEventSenderService;
-import ru.ardecs.sideprojects.eventsourcing.handlers.CommonHandler;
-import ru.ardecs.sideprojects.eventsourcing.model.Event;
-import ru.ardecs.sideprojects.eventsourcing.model.EventType;
-import ru.ardecs.sideprojects.eventsourcing.model.HeroEntity;
+import ru.ardecs.sideprojects.cqrs.commands.kafka.sender.model.Event;
+import ru.ardecs.sideprojects.cqrs.commands.kafka.sender.model.EventType;
 
 import java.util.Date;
 import java.util.UUID;
@@ -34,23 +33,21 @@ public class HeroesCommandController {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private final HeroesEventSenderService senderService;
-    private final CommonHandler<HeroEntity> commonHandler;
 
     @Autowired
-    public HeroesCommandController(HeroesEventSenderService senderService, CommonHandler<HeroEntity> commonHandler) {
+    public HeroesCommandController(HeroesEventSenderService senderService) {
         this.senderService = senderService;
-        this.commonHandler = commonHandler;
     }
 
     @PostMapping("/heroes")
     @CrossOrigin(origins = "http://localhost:4200")
-    public void saveHero(@RequestBody HeroEntity body) throws JsonProcessingException {
+    public void saveHero(@RequestBody HeroCommandEntity body) throws JsonProcessingException {
 
         Event event = new Event();
         event.setType(EventType.CREATE);
-        event.setName(HeroEntity.class.getSimpleName());
+        event.setName(HeroCommandEntity.class.getSimpleName());
         event.setObjectId(UUID.randomUUID().toString());
-        event.setPayload(commonHandler.getPropertiesMap(body));
+        event.setPayload(ObjectUtils.getPropertiesMap(body));
         event.setCreatedDate(new Date());
 
         senderService.send(MAPPER.writeValueAsString(event));
@@ -58,15 +55,15 @@ public class HeroesCommandController {
 
     @PutMapping("/heroes")
     @CrossOrigin(origins = "http://localhost:4200")
-    public void updateHero(@RequestBody HeroEntity body) throws JsonProcessingException {
+    public void updateHero(@RequestBody HeroCommandEntity body) throws JsonProcessingException {
         LOG.info("Body id: " + body.getId());
         LOG.info("Body name: " + body.getName());
 
         Event event = new Event();
         event.setType(EventType.UPDATE);
-        event.setName(HeroEntity.class.getSimpleName());
+        event.setName(HeroCommandEntity.class.getSimpleName());
         event.setObjectId(body.getId());
-        event.setPayload(commonHandler.getPropertiesMap(body));
+        event.setPayload(ObjectUtils.getPropertiesMap(body));
         event.setCreatedDate(new Date());
 
         senderService.send(MAPPER.writeValueAsString(event));
@@ -77,7 +74,7 @@ public class HeroesCommandController {
     public void deleteHero(@PathVariable String id) throws JsonProcessingException {
         Event event = new Event();
         event.setType(EventType.REMOVE);
-        event.setName(HeroEntity.class.getSimpleName());
+        event.setName(HeroCommandEntity.class.getSimpleName());
         event.setObjectId(id);
         event.setCreatedDate(new Date());
 

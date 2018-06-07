@@ -10,10 +10,10 @@ import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
+import ru.ardecs.sideprojects.cqrs.commands.kafka.sender.model.Event;
 import ru.ardecs.sideprojects.cqrs.query.kafka.reciever.handlers.CreateHeroEventHandler;
 import ru.ardecs.sideprojects.cqrs.query.kafka.reciever.handlers.DeleteHeroEventHandler;
 import ru.ardecs.sideprojects.cqrs.query.kafka.reciever.handlers.UpdateHeroEventHandler;
-import ru.ardecs.sideprojects.eventsourcing.model.Event;
 
 @Service
 public class HeroesEventReceiverService {
