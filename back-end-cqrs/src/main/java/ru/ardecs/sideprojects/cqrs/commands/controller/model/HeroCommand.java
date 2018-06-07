@@ -9,15 +9,15 @@ import java.util.Date;
  * @author <a href="mailto:sergey.ilminskih@ardecs.com">Sergey Ilminskih</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class HeroCommandEntity implements Serializable {
+public class HeroCommand implements Serializable {
     private String id;
     private String name;
     private Date createdDate;
 
-    public HeroCommandEntity() {
+    public HeroCommand() {
     }
 
-    public HeroCommandEntity(String id, String name) {
+    public HeroCommand(String id, String name) {
         this.id = id;
         this.name = name;
         this.createdDate = new Date();
