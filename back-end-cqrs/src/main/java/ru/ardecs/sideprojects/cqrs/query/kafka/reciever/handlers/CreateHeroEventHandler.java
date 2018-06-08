@@ -28,6 +28,10 @@ public class CreateHeroEventHandler implements EventHandler<HeroQueryEntity> {
         heroQueryEntity.setName(event.getPayload().get("name"));
 
         // TODO: обрабатывать ошибки сохранения (например проверка констрейнтов на уровне БД)
-        repository.save(heroQueryEntity);
+        try {
+            repository.save(heroQueryEntity);
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
     }
 }

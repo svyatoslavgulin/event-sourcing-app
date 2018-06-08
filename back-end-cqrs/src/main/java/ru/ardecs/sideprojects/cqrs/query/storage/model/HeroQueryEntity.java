@@ -11,10 +11,10 @@ import java.io.Serializable;
 public class HeroQueryEntity implements Serializable {
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, unique = true)
     private String id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     public String getId() {
