@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 @Configuration
-public class StorageConfiguration {
+public class StorageSpringConfiguration {
 
     @Bean(name = "dataSource")
     @ConfigurationProperties("spring.datasource")
