@@ -9,10 +9,10 @@ import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
-
 import ru.ardecs.sideprojects.cqrs.commands.kafka.sender.model.Event;
 import ru.ardecs.sideprojects.cqrs.query.kafka.reciever.handlers.CreateHeroEventHandler;
 import ru.ardecs.sideprojects.cqrs.query.kafka.reciever.handlers.DeleteHeroEventHandler;
+import ru.ardecs.sideprojects.cqrs.query.kafka.reciever.handlers.ErrorHeroEventHandler;
 import ru.ardecs.sideprojects.cqrs.query.kafka.reciever.handlers.UpdateHeroEventHandler;
 
 @Service
@@ -23,14 +23,17 @@ public class HeroesEventReceiverService {
     private final CreateHeroEventHandler createHeroEventHandler;
     private final DeleteHeroEventHandler deleteHeroEventHandler;
     private final UpdateHeroEventHandler updateHeroEventHandler;
+    private final ErrorHeroEventHandler errorHeroEventHandler;
 
     @Autowired
     public HeroesEventReceiverService(CreateHeroEventHandler createHeroEventHandler,
                                       DeleteHeroEventHandler deleteHeroEventHandler,
-                                      UpdateHeroEventHandler updateHeroEventHandler) {
+                                      UpdateHeroEventHandler updateHeroEventHandler,
+                                      ErrorHeroEventHandler errorHeroEventHandler) {
         this.createHeroEventHandler = createHeroEventHandler;
         this.deleteHeroEventHandler = deleteHeroEventHandler;
         this.updateHeroEventHandler = updateHeroEventHandler;
+        this.errorHeroEventHandler = errorHeroEventHandler;
     }
 
     @KafkaListener(topics = "${app.topic.hero-events}")
@@ -49,6 +52,9 @@ public class HeroesEventReceiverService {
                     break;
                 case REMOVE:
                     deleteHeroEventHandler.apply(event);
+                    break;
+                case ERROR:
+                    errorHeroEventHandler.apply(event);
                     break;
             }
         } catch (Exception e) {

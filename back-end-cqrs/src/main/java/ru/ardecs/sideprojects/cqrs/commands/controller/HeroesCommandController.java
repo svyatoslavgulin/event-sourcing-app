@@ -44,6 +44,7 @@ public class HeroesCommandController {
     public void saveHero(@RequestBody HeroCommand body) throws JsonProcessingException {
 
         Event event = new Event();
+        event.setId(UUID.randomUUID().toString());
         event.setType(EventType.CREATE);
         event.setName(HeroCommand.class.getSimpleName());
         event.setObjectId(UUID.randomUUID().toString());
@@ -60,6 +61,7 @@ public class HeroesCommandController {
         LOG.info("Body name: " + body.getName());
 
         Event event = new Event();
+        event.setId(UUID.randomUUID().toString());
         event.setType(EventType.UPDATE);
         event.setName(HeroCommand.class.getSimpleName());
         event.setObjectId(body.getId());
@@ -73,6 +75,7 @@ public class HeroesCommandController {
     @CrossOrigin(origins = "http://localhost:4200")
     public void deleteHero(@PathVariable String id) throws JsonProcessingException {
         Event event = new Event();
+        event.setId(UUID.randomUUID().toString());
         event.setType(EventType.REMOVE);
         event.setName(HeroCommand.class.getSimpleName());
         event.setObjectId(id);

@@ -6,5 +6,6 @@ package ru.ardecs.sideprojects.cqrs.commands.kafka.sender.model;
 public enum EventType {
     UPDATE,
     CREATE,
-    REMOVE;
+    REMOVE,
+    ERROR;
 }

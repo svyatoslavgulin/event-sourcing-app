@@ -12,6 +12,7 @@ public class Event implements Serializable {
     private String name;
     private Date createdDate;
     private Map<String, String> payload;
+    private String errorMessage;
 
     public String getId() {
         return id;
@@ -59,5 +60,13 @@ public class Event implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }
