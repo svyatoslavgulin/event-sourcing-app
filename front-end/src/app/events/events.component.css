@@ -1,0 +1,15 @@
+.create {
+  color: lime;
+}
+
+.remove {
+  color: deeppink;
+}
+
+.update {
+  color: darkseagreen;
+}
+
+.error {
+  color: red;
+}

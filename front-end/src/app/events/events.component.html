@@ -1,0 +1,10 @@
+<div>
+  <ul class="events">
+    <div *ngFor="let event of events">
+      <li class="{{event.type | lowercase}}">
+        <span class="badge"><b>Event ID:</b> {{event.id}}</span> <b>Class:</b> {{event.name | uppercase}} <b>Type:</b>
+        {{event.type}} <div *ngIf="event.payload"><b>Details:</b> {{event.payload.name}}</div>
+      </li>
+    </div>
+  </ul>
+</div>
