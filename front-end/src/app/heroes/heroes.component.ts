@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
+import {tap} from "rxjs/operators";
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-heroes',
@@ -10,8 +12,11 @@ import { HeroService } from '../hero.service';
 })
 export class HeroesComponent implements OnInit {
   heroes: Hero[];
+  private log(message: string) {
+    this.messageService.add('HeroService: ' + message);
+  }
 
-  constructor(private heroService: HeroService) { }
+  constructor(private heroService: HeroService, private messageService: MessageService) { }
 
   ngOnInit() {
     this.getHeroes();
@@ -26,9 +31,7 @@ export class HeroesComponent implements OnInit {
     name = name.trim();
     if (!name) { return; }
     this.heroService.addHero({ name } as Hero)
-      .subscribe(hero => {
-        this.heroes.push(hero);
-      });
+      .subscribe(hero => {});
   }
 
   delete(hero: Hero): void {

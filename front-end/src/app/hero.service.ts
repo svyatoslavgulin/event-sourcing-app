@@ -7,6 +7,7 @@ import { Hero } from './hero';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import {Event} from "./event";
 
 const httpOptions = {
 headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -20,7 +21,8 @@ export class HeroService {
       this.messageService.add('HeroService: ' + message);
     }
 
-  private heroesUrl = 'http://localhost:8080/heroes';
+  private heroesUrl = 'http://localhost:8080/cqrs/heroes';
+  private baseUrl = 'http://localhost:8080/cqrs';
 
   constructor(
     private http: HttpClient,
@@ -46,6 +48,23 @@ export class HeroService {
     );
   }
 
+  /** GET events of hero by id. Will 404 if id not found */
+  getEventsForHero(id: string): Observable<Event[]> {
+    const url = `${this.baseUrl}/events?objectId=${id}&offset=0`;
+    return this.http.get<Event[]>(url).pipe(
+      tap(_ => this.log(`fetched events`)),
+      catchError(this.handleError(`getEvents`, []))
+    );
+  }
+
+  /** GET events of all hero. Will 404 if id not found */
+  getAllEvents(): Observable<Event[]> {
+    const url = `${this.baseUrl}/allevents`;
+    return this.http.get<Event[]>(url).pipe(
+      tap(events => this.log(`fetched events`)),
+      catchError(this.handleError(`getEvents`, []))
+    );
+  }
   /**
    * Handle Http operation that failed.
    * Let the app continue.
