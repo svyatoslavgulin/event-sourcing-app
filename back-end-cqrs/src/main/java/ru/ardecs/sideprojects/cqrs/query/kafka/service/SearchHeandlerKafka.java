@@ -63,13 +63,16 @@ public class SearchHeandlerKafka {
     public List<Event> getAllEventsFromKafkaByObjectId(String id, int offset) {
         Date startSearchDate = new Date();
 
-        Consumer<String, String> consumer = getConsumer();
+        Consumer<String, String> consumer = new KafkaConsumer<>(getPropertiesOfConsumer());
+        TopicPartition topicPartition = new TopicPartition(topic, 0);
+        List<TopicPartition> topics = Arrays.asList(topicPartition);
+        consumer.assign(topics);
+        consumer.seek(topicPartition, offset);
         List<Event> allEvents = new ArrayList<>();
         Boolean continueSearch = Boolean.TRUE;
         int startPosition = offset;
         while (continueSearch) {
             ConsumerRecords<String, String> records = consumer.poll(100);
-            consumer.seek(getTopicPartition(consumer), startPosition);
 
             for (ConsumerRecord<String, String> record : records) {
                 Event event = getEvent(record.value());
