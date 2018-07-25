@@ -1,15 +1,48 @@
+.event-block {
+  margin: 0.5%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 3px;
+  padding-left: 15px;
+  width: 30%;
+  float: left;
+  min-height: 80px;
+}
+
 .create {
-  color: lime;
+  background: lime;
+  color: white;
+  opacity: 0.5;
 }
 
 .remove {
-  color: deeppink;
+  background: red;
+  color: white;
+  opacity: 0.5;
 }
 
 .update {
-  color: darkseagreen;
+  background: #039be5;
+  color: white;
+  opacity: 0.5;
+}
+.ima {
+  background-image: url("../img/wonderWoman.jpg");
+  z-index: 100;
 }
 
 .error {
-  color: red;
+  background: #888888;
+  color: white;
+  opacity: 0.5;
+}
+
+.text-left {
+  width: 10%;
+  float: left;
+}
+
+.text-left + div {
+  width: 25%;
+  margin: 0 0 0 auto;
 }

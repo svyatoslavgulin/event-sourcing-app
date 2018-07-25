@@ -1,10 +1,17 @@
 <div>
   <ul class="events">
-    <div *ngFor="let event of events">
-      <li class="{{event.type | lowercase}}">
-        <span class="badge"><b>Event ID:</b> {{event.id}}</span> <b>Class:</b> {{event.name | uppercase}} <b>Type:</b>
-        {{event.type}} <div *ngIf="event.payload"><b>Details:</b> {{event.payload.name}}</div>
-      </li>
+    <div *ngFor="let event of events; let i = index;">
+      <div class="{{event.type | lowercase}} event-block">
+        <div>
+          <div class="text-left"><b>№:</b> {{i}}</div>
+          <div><b>Type:</b> {{event.type}}</div>
+        </div>
+        <div style="margin-top: 15px">
+          <div><b>Class:</b> {{event.name | uppercase}}</div>
+          <div><b>Event ID:</b> {{event.id}}</div>
+          <div *ngIf="event.payload"><b>Details:</b> {{event.payload.name}}</div>
+        </div>
+      </div>
     </div>
   </ul>
 </div>

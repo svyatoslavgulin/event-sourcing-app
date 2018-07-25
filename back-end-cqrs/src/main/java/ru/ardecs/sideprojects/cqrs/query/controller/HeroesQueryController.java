@@ -60,4 +60,11 @@ public class HeroesQueryController {
     public List<Event> getAllEvent() {
         return searchHeandlerKafka.getAllEvents();
     }
+
+    @GetMapping("/events/size")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public long getSize() {
+        return searchHeandlerKafka.getPosition();
+    }
+
 }

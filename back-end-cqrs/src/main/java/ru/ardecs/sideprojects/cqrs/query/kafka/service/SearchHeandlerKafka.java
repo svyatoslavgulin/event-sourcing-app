@@ -30,7 +30,7 @@ public class SearchHeandlerKafka {
     public Event getEventsFromKafkaById(String id) {
         Date startSearchDate = new Date();
 
-        Consumer<String, String> consumer = getConsumer();
+        Consumer<String, String> consumer = getConsumer(0);
 
         Boolean continueSearch = Boolean.TRUE;
         int startPosition = 0;
@@ -63,11 +63,7 @@ public class SearchHeandlerKafka {
     public List<Event> getAllEventsFromKafkaByObjectId(String id, int offset) {
         Date startSearchDate = new Date();
 
-        Consumer<String, String> consumer = new KafkaConsumer<>(getPropertiesOfConsumer());
-        TopicPartition topicPartition = new TopicPartition(topic, 0);
-        List<TopicPartition> topics = Arrays.asList(topicPartition);
-        consumer.assign(topics);
-        consumer.seek(topicPartition, offset);
+        Consumer<String, String> consumer = getConsumer(offset);
         List<Event> allEvents = new ArrayList<>();
         Boolean continueSearch = Boolean.TRUE;
         int startPosition = offset;
@@ -95,10 +91,20 @@ public class SearchHeandlerKafka {
         return allEvents;
     }
 
+    public long getPosition(){
+        TopicPartition topicPartition = new TopicPartition(topic, 0);
+        Consumer consumer = new KafkaConsumer<>(getPropertiesOfConsumer());
+        consumer.assign(Arrays.asList(topicPartition));
+        consumer.seekToEnd(Arrays.asList(topicPartition));
+        long size = consumer.position(topicPartition);
+        consumer.close();
+        return size;
+    }
+
     public List<Event> getAllEvents() {
         Date startSearchDate = new Date();
 
-        Consumer<String, String> consumer = getConsumer();
+        Consumer<String, String> consumer = getConsumer(0);
         List<Event> allEvents = new ArrayList<>();
         Boolean continueSearch = Boolean.TRUE;
         int startPosition = 0;
@@ -136,9 +142,12 @@ public class SearchHeandlerKafka {
         return new Event();
     }
 
-    private Consumer<String, String> getConsumer() {
+    private Consumer<String, String> getConsumer(int offset) {
         Consumer<String, String> consumer = new KafkaConsumer<>(getPropertiesOfConsumer());
-        consumer.subscribe(Arrays.asList(topic));
+        TopicPartition topicPartition = new TopicPartition(topic, 0);
+        List<TopicPartition> topics = Arrays.asList(topicPartition);
+        consumer.assign(topics);
+        consumer.seek(topicPartition, offset);
         return consumer;
     }
 
