@@ -5,7 +5,6 @@
   padding-right: 3px;
   padding-left: 15px;
   width: 30%;
-  float: left;
   min-height: 80px;
 }
 
@@ -27,7 +26,6 @@
   opacity: 0.5;
 }
 .ima {
-  background-image: url("../img/wonderWoman.jpg");
   z-index: 100;
 }
 
